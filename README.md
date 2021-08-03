@@ -1,3 +1,3 @@
 # hbbyrn (hobby runtime)
 
-Study project for containers, low-level container runtimes, etc...
+This project to play and learn about containers, low-level container runtimes, and more.
