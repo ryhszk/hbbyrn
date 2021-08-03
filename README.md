@@ -1,2 +1,3 @@
-# hbbyrn
-hobby runtime (hbbyrn)  is for study
+# hbbyrn (hobby runtime)
+
+Study projects for containers, low-level container runtimes, etc...
