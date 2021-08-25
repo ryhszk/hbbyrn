@@ -1,0 +1,1 @@
+/usr/lib/swidtag/redhat.com

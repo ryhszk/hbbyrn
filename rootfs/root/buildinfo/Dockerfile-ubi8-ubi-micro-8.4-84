@@ -1,0 +1,27 @@
+FROM sha256:0ced1c7c9b23d0e107c7b15d5a0017abbbcf7e64e49a4c9f9efa1b9589ca8b68 AS ubi-micro-build
+RUN mkdir -p /mnt/rootfs
+RUN yum install --installroot /mnt/rootfs coreutils-single glibc-minimal-langpack --releasever 8 --setopt install_weak_deps=false --nodocs -y; yum --installroot /mnt/rootfs clean all
+RUN rm -rf /mnt/rootfs/var/cache/* /mnt/rootfs/var/log/dnf* /mnt/rootfs/var/log/yum.*
+
+FROM scratch
+LABEL maintainer="Red Hat, Inc."
+
+LABEL com.redhat.component="ubi8-micro-container"
+LABEL name="ubi8/ubi-micro"
+LABEL version="8.4"
+
+#label for EULA
+LABEL com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
+
+#labels for container catalog
+LABEL summary="ubi8 micro image"
+LABEL description="Very small image which doesn't install the package manager."
+LABEL io.k8s.display-name="Ubi8-micro"
+LABEL io.openshift.expose-services=""
+
+COPY --from=ubi-micro-build /mnt/rootfs/ /
+COPY --from=ubi-micro-build /etc/yum.repos.d/ubi.repo /etc/yum.repos.d/ubi.repo
+CMD /bin/sh
+
+ADD ubi8-micro-container-8.4-84.json /root/buildinfo/content_manifests/ubi8-micro-container-8.4-84.json
+LABEL "release"="84" "distribution-scope"="public" "vendor"="Red Hat, Inc." "build-date"="2021-08-03T16:22:06.389689" "architecture"="x86_64" "vcs-type"="git" "vcs-ref"="c20f4a2add7d519164f7cf64842bc9f024d225ab" "com.redhat.build-host"="cpt-1003.osbs.prod.upshift.rdu2.redhat.com" "io.k8s.description"="Very small image which doesn't install the package manager." "url"="https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8/ubi-micro/images/8.4-84"
