@@ -9,6 +9,7 @@ This project to play and learn about containers, low-level container runtimes, a
 # podman export $(podman create ubi8-micro)  | tar -C rootfs -xvf -
 ```
 
+# start container
 ```
 # go run main.go run /bin/bash
 running [/bin/sh] as PID 1
